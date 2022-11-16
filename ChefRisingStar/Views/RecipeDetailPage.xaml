@@ -201,6 +201,15 @@
                                     </xct:TabView>
                                 </Grid>
                             </Frame>
+                            <pancake:PancakeView CornerRadius="50" Margin="15,-20,120,0" HeightRequest="35" WidthRequest="35" Padding="2" HorizontalOptions="EndAndExpand" VerticalOptions="Start" BackgroundColor="White" >
+                                <pancake:PancakeView.Shadow>
+                                    <pancake:DropShadow Color="Black" BlurRadius="10" Offset="1,1"/>
+                                </pancake:PancakeView.Shadow>
+                                <Image Source="https://cdn.iconscout.com/icon/premium/png-256-thumb/share-5782906-4835479.png" Aspect="AspectFit" Margin="5"/>
+                                <pancake:PancakeView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ShareCommand}"/>
+                                </pancake:PancakeView.GestureRecognizers>
+                            </pancake:PancakeView>
                             <pancake:PancakeView CornerRadius="50" Margin="15,-20,20,0" HeightRequest="35" WidthRequest="35" Padding="2" HorizontalOptions="EndAndExpand" VerticalOptions="Start" BackgroundColor="White" >
                                 <pancake:PancakeView.Shadow>
                                     <pancake:DropShadow Color="Black" BlurRadius="10" Offset="1,1"/>

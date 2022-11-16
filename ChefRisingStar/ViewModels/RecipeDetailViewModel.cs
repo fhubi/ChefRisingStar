@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -126,6 +127,7 @@ namespace ChefRisingStar.ViewModels
 
         public Command LoadUrlCommand { get; }
         public Command OpenSubstitutionsCommand { get; }
+        public Command ShareCommand { get; }
 
         #endregion 
 
@@ -168,6 +170,8 @@ namespace ChefRisingStar.ViewModels
             //    Page page = (Page)Activator.CreateInstance(pageType);
             //    await Navigation.PushAsync(page);
             //});
+
+            ShareCommand = new Command(async () => await ShareRecipe());
         }
 
         #endregion 
@@ -435,7 +439,33 @@ namespace ChefRisingStar.ViewModels
             IsBusy = false;
         }
 
+        internal async Task ShareRecipe()
+        {
+            string action = await Application.Current.MainPage.DisplayActionSheet("Photo options", "Cancel", null, "Take photo", "Select from gallery", "Use default image");
+            bool fromWeb = false;
+            string filePath;
 
+            switch (action)
+            {
+                case "Cancel":
+                    return;
+                case "Take photo":
+                    var photoFileResult = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions() { Title = Recipe.Title });
+                    filePath = photoFileResult.FullPath;
+                    break;
+                case "Select from gallery":
+                    var galleryFileResult = await MediaPicker.PickPhotoAsync(new MediaPickerOptions() { Title = Recipe.Title });
+                    filePath = galleryFileResult.FullPath;
+                    break;
+                default:
+                    filePath = Recipe.Image.AbsolutePath;
+                    fromWeb = true;
+                    break;
+
+            }
+
+            await DependencyService.Get<IShare>().Share(Recipe.Instructions?.Replace("<p>", "").Replace("</p>", ""), filePath, fromWeb);
+        }
         #endregion
     }
 }
