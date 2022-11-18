@@ -21,6 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ManageAchievementsPage.xaml.cs">
+      <DependentUpon>ManageAchievementsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ManageTeamsPage.xaml.cs">
+      <DependentUpon>ManageTeamsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ManageUsersPage.xaml.cs">
       <DependentUpon>ManageUsersPage.xaml</DependentUpon>
     </Compile>
@@ -53,7 +59,6 @@
     <EmbeddedResource Include="sample\Substitutions.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Styles\" />
     <Folder Include="CustomRenderer\" />
   </ItemGroup>

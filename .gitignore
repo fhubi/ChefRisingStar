@@ -353,3 +353,4 @@ MigrationBackup/
 /Database/sqlite3.dll
 /Database/sqlite3.def
 /Database/sqldiff.exe
+/Database/ltdc.db

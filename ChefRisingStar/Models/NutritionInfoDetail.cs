@@ -13,12 +13,12 @@ namespace ChefRisingStar.Models
 
         [JsonProperty("title")]
         [JsonPropertyName("title")]
-        public string Title 
+        public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
-        
+
         [JsonProperty("amount")]
         [JsonPropertyName("amount")]
         public string Amount
@@ -46,7 +46,7 @@ namespace ChefRisingStar.Models
         [JsonIgnore]
         public string DailyPercent
         {
-            get { return PercentOfDailyNeeds.ToString("P"); }
+            get { return (PercentOfDailyNeeds / 100).ToString("P"); }
         }
 
         public override string ToString()

@@ -62,5 +62,10 @@ namespace ChefRisingStar.Services
         {
             return items.AsReadOnly();
         }
+
+        public IEnumerable<Item> GetSearchResults(string searchText)
+        {
+            return items.Where(i => i.Text.Contains(searchText));
+        }
     }
 }

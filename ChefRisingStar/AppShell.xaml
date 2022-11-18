@@ -81,10 +81,16 @@
     <FlyoutItem Title="About" Icon="icon_about.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding CurrentUser.IsAdmin}" FlyoutDisplayOptions="AsMultipleItems">
+        <Tab Title="Achievement Admin" Icon="briefcase128.png">
+            <ShellContent Title="Manage Achievements" Route="ManageAchievementsPage" Icon="briefcase128.png" ContentTemplate="{DataTemplate local:ManageAchievementsPage}" />
+        </Tab>
+    </FlyoutItem>
     <FlyoutItem Title="Adminstration" Icon="briefcase128.png" IsVisible="{Binding CurrentUser.IsAdmin}" FlyoutDisplayOptions="AsMultipleItems">
         <Tab Title="Adminstration" Icon="briefcase128.png">
             <ShellContent Title="Manage Schools" Route="ManageSchoolsPage" Icon="briefcase128.png" ContentTemplate="{DataTemplate local:ManageSchoolsPage}" />
             <ShellContent Title="Manage Users" Route="ManageUsersPage" Icon="briefcase128.png" ContentTemplate="{DataTemplate local:ManageUsersPage}" />
+            <ShellContent Title="Manage Teams" Route="ManageTeamsPage" Icon="briefcase128.png" ContentTemplate="{DataTemplate local:ManageTeamsPage}" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Daily Challenge" Icon="Calendar64.png">

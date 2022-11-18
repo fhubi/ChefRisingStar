@@ -9,7 +9,7 @@ namespace ChefRisingStar.Helpers
         {
             RestHelper.MakePost(metric, Route);
         }
-        
+
         public static void SendMetric(MetricType metricType, string value)
         {
             AppMetric metric = new AppMetric(metricType, value);

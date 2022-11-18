@@ -75,5 +75,10 @@ namespace ChefRisingStar.Services
         {
             return items.AsReadOnly();
         }
+
+        public IEnumerable<AchievementStep> GetSearchResults(string searchText)
+        {
+            return items.Where(i => i.Name.Contains(searchText));
+        }
     }
 }

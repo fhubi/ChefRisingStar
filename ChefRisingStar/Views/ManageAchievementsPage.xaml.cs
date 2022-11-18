@@ -4,14 +4,14 @@ using Xamarin.Forms;
 
 namespace ChefRisingStar.Views
 {
-    public partial class ManageSchoolsPage : ContentPage
+    public partial class ManageAchievementsPage : ContentPage
     {
-        SchoolViewModel _viewModel;
+        private ManageAchievementsViewModel _viewModel;
 
-        public ManageSchoolsPage()
+        public ManageAchievementsPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new SchoolViewModel();
+            BindingContext = _viewModel = new ManageAchievementsViewModel();
             Title = _viewModel.Title;
         }
 
@@ -21,7 +21,7 @@ namespace ChefRisingStar.Views
 
             if (searchBar.Text.Length == 0)
             {
-                _viewModel.ShowAllSchools();
+                _viewModel.ShowAllAchievements();
                 return;
             }
 
@@ -29,6 +29,12 @@ namespace ChefRisingStar.Views
             {
                 _viewModel.GetSearchResults(searchBar.Text);
             }
+        }
+
+        private void OnAppearing(object sender, EventArgs e)
+        {
+            _viewModel.OnAppearing();
+
         }
     }
 }

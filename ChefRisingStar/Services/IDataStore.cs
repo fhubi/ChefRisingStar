@@ -13,5 +13,6 @@ namespace ChefRisingStar.Services
 
         Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
         ReadOnlyCollection<T> GetItems(bool forceRefresh = false);
+        IEnumerable<T> GetSearchResults(string searchText);
     }
 }

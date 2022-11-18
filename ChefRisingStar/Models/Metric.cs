@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ChefRisingStar.Models
 {
@@ -15,8 +13,9 @@ namespace ChefRisingStar.Models
         UserLikedIngredient,
         UserSharedPhoto,
         UserSharedUpdate,
-        UserJoinedBridage,
-        UsewrSubmittedRecipe,
+        UserJoinedBrigade,
+        UserSubmittedRecipe,
+        UserSentMessage,
         AppError
     }
     public class AppMetric
@@ -25,8 +24,8 @@ namespace ChefRisingStar.Models
         public string Value { get; set; }
         public DateTime OccuredOn { get; set; }
 
-        public AppMetric() 
-        { 
+        public AppMetric()
+        {
         }
 
         public AppMetric(MetricType metricTypeCaptured, string value)

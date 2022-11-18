@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -22,7 +21,7 @@ namespace ChefRisingStar.Helpers
 
                     // Add an Accept header for JSON format.
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    
+
                     // Initialization
                     HttpResponseMessage response = new HttpResponseMessage();
 
@@ -61,7 +60,7 @@ namespace ChefRisingStar.Helpers
 
                     // Add an Accept header for JSON format.
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    
+
                     // Initialization
                     HttpResponseMessage response = new HttpResponseMessage();
 
@@ -81,7 +80,7 @@ namespace ChefRisingStar.Helpers
                         {
                             throw new ArgumentNullException("jsonStr", "Unable to post");
                         }
-                        
+
                         TR jsonObject = JsonConvert.DeserializeObject<TR>(jsonStr);
                         return jsonObject;
                     }
@@ -104,7 +103,7 @@ namespace ChefRisingStar.Helpers
 
                 // Add an Accept header for JSON format.
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                
+
                 // List data response.
                 var response = await client.GetAsync(urlParameters);  // Blocking call! Program will wait here until a response is received or a timeout occurs.
 

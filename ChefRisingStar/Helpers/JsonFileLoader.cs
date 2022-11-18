@@ -17,7 +17,7 @@ namespace ChefRisingStar.Helpers
                 var assembly = typeof(Views.RecipeDetailPage).GetTypeInfo().Assembly;
                 //string[] resources = assembly.GetManifestResourceNames();
                 Stream stream = assembly.GetManifestResourceStream($"ChefRisingStar.sample.{fileName}");
-                
+
                 using (var reader = new StreamReader(stream))
                 {
                     var json = reader.ReadToEnd();

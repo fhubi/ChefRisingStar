@@ -1,8 +1,4 @@
-﻿using System.Windows.Input;
-using Xamarin.Essentials;
-using Xamarin.Forms;
-
-namespace ChefRisingStar.ViewModels
+﻿namespace ChefRisingStar.ViewModels
 {
     public class AppShellViewModel : BaseViewModel
     {
@@ -10,7 +6,7 @@ namespace ChefRisingStar.ViewModels
         {
             CurrentUser = new Models.User
             {
-                UserName = "Fallout",
+                Username = "Fallout",
                 EmailAddress = "fallout99@hotmail.com",
                 IsAdmin = true
             };

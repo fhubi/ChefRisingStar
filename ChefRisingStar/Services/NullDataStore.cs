@@ -46,5 +46,10 @@ namespace ChefRisingStar.Services
         {
             return new ReadOnlyCollection<bool>(new[] { true, false });
         }
+
+        public IEnumerable<bool> GetSearchResults(string searchText)
+        {
+            return new ReadOnlyCollection<bool>(new[] { true, false });
+        }
     }
 }

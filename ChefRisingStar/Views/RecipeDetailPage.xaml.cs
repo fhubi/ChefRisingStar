@@ -1,5 +1,4 @@
-﻿using ChefRisingStar.Behaviours;
-using ChefRisingStar.Models;
+﻿using ChefRisingStar.Models;
 using ChefRisingStar.ViewModels;
 using System;
 using System.Diagnostics;
@@ -43,7 +42,7 @@ namespace ChefRisingStar.Views
             _viewModel.IsSubstitutionVisible = false;
             _viewModel.ReplaceIngredient();
         }
-        
+
         private void ViewMoreClicked(object sender, EventArgs e)
         {
             _viewModel.IsContextMenuVisible = false;

@@ -1,14 +1,10 @@
-﻿using ChefRisingStar.Models;
-using System.Diagnostics;
-using System;
-using Xamarin.Forms;
-using System.Text.Json;
+﻿using Xamarin.Forms;
 
 namespace ChefRisingStar.Views
 {
     public partial class AboutPage : ContentPage
     {
-        
+
         public AboutPage()
         {
             InitializeComponent();

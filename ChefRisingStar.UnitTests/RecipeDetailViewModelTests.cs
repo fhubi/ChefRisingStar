@@ -1,10 +1,10 @@
 ﻿using ChefRisingStar.Models;
-//using Newtonsoft.Json;
-using System.Text.Json;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System;
 using System.Diagnostics;
+//using Newtonsoft.Json;
+using System.Text.Json;
 using Xamarin.UITest;
 using Platform = Xamarin.UITest.Platform;
 
@@ -41,11 +41,11 @@ namespace ChefRisingStar.UnitTests
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error getting nutritional: {ex}"); 
+                Debug.WriteLine($"Error getting nutritional: {ex}");
                 Assert.True(ex == null);
             }
         }
-        
+
         [Test]
         public void SuccessSerializeNuitritionalInfo()
         {
@@ -76,7 +76,7 @@ namespace ChefRisingStar.UnitTests
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error getting nutritional: {ex}"); 
+                Debug.WriteLine($"Error getting nutritional: {ex}");
                 Assert.True(ex == null);
             }
         }
