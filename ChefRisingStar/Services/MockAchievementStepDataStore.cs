@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChefRisingStar.Services
 {
-    public class MockAchievementConditionDataStore : IDataStore<AchievementStep, int>
+    public class MockAchievementStepDataStore : IDataStore<AchievementStep, int>
     {
         readonly List<AchievementStep> items;
 
-        public MockAchievementConditionDataStore()
+        public MockAchievementStepDataStore()
         {
             items = new List<AchievementStep>()
             {

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:ChefRisingStar.ViewModels"
+    xmlns:model="clr-namespace:ChefRisingStar.Models"
+             
+    x:Class="ChefRisingStar.Views.RecipeEntryPage"
+    Title="Recipe Entry">
+    <ContentPage.Content>
+    <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Frame CornerRadius="25" BorderColor="DarkBlue">
+            <ScrollView>
+        <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Frame CornerRadius="25" Grid.Row="0" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand" Margin="0" Padding="0">
+                    <Label Text="General" Grid.Row="0" Grid.ColumnSpan="4" TextColor="White" BackgroundColor="CornflowerBlue"
+                           FontAttributes="Bold" FontSize="Medium"
+                           HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                </Frame>
+                <Label Text="Title" Grid.Row="1" Grid.Column="0" FontSize="Medium" />
+                <Entry Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Name of Recipe"
+                       Text="{Binding RecipeTitle}" />
+
+                <Label Text="Serves" Grid.Row="2" Grid.Column="0" FontSize="Medium" />
+                <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Serving Size"
+                       Text="{Binding Servings}"/>
+
+                <Label Text="Time to Cook" Grid.Row="3" Grid.Column="0" FontSize="Medium" />
+                <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Cooking time in minutes"
+                       Text="{Binding ReadyInMinutes}"/>
+
+                <Label Text="Cuisine(s)" Grid.Row="4" Grid.Column="0" FontSize="Medium" />
+                <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
+                    <Entry  Placeholder="Select Cuisine(s)" Text="{Binding SelectedCuisines}" />
+                    <BoxView  />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenCuisinesCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+                <!-- Placeholder row 5 for Dish Type-->
+                <Frame CornerRadius="25" Grid.Row="6" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand" Margin="0" Padding="0">
+                    <Label Text="Instructions" Grid.Row="6" Grid.ColumnSpan="4" TextColor="White"
+                           FontAttributes="Bold" FontSize="Medium" BackgroundColor="CornflowerBlue"
+                           HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                </Frame>
+                <Frame CornerRadius="25" Grid.Row="7" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand" Margin="0" Padding="0">
+                    <ScrollView>
+                        <Editor Grid.Row="7" Grid.ColumnSpan="4" BackgroundColor="AliceBlue" IsTextPredictionEnabled="True"
+                                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" AutoSize="TextChanges"
+                                Placeholder="Each instruction goes on a separate line" HeightRequest="240"
+                                Text="{Binding Instructions}">
+                        </Editor>
+                    </ScrollView>
+                </Frame>
+
+                <Button Text="Save" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" x:Name="saveButton" BackgroundColor="CornflowerBlue" TextColor="White"
+                        FontAttributes="Bold" FontSize="Medium" CornerRadius="25" Clicked="OnSaveButtonClicked"/>
+                <Button Text="Delete" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" x:Name="deleteButton" BackgroundColor="PaleVioletRed" TextColor="White"
+                        FontAttributes="Bold" FontSize="Medium" CornerRadius="25" Clicked="OnDeleteButtonClicked"/>
+            </Grid>
+                </ScrollView>
+            </Frame>
+       
+        <ContentView x:Name="popupViewCuisines" BackgroundColor="#C0808080" Padding="20, 0" IsVisible="{Binding IsSelectCuisineVisible}"
+                             AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">                
+            <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="10,10,10,60">
+                <ScrollView>
+                    <ListView x:Name="cuisineList" ItemsSource="{Binding Cuisines}" SelectionMode="None" ItemTapped="cuisineList_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid ColumnSpacing="10" Padding="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0" Text="{Binding Text}" />
+                                        <CheckBox Grid.Column="1" IsChecked="{Binding IsSelected}" HorizontalOptions="EndAndExpand" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+                <Button Text="Done" Clicked="CloseCuisineClicked" Margin="10" />
+            </StackLayout>
+        </ContentView>
+    </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
+

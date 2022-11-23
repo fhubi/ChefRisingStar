@@ -406,7 +406,7 @@ namespace ChefRisingStar.ViewModels
         private void CheckAchievments()
         {
             IDataStore<Achievement, int> achievmentDs = DependencyService.Get<MockAchievementDataStore>();
-            IDataStore<AchievementStep, int> achievmentsConditionDs = DependencyService.Get<MockAchievementConditionDataStore>();
+            IDataStore<AchievementStep, int> achievmentsConditionDs = DependencyService.Get<MockAchievementStepDataStore>();
 
             ReadOnlyCollection<Achievement> achievments = achievmentDs.GetItems();
             ReadOnlyCollection<AchievementStep> achievmentConditions = achievmentsConditionDs.GetItems();

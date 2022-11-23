@@ -28,6 +28,20 @@ namespace ChefRisingStar.ViewModels
                 SetProperty(ref _allAchievements, value);
             }
         }
+        
+        private AchievementStep _selectedAchievementStep;
+
+        public AchievementStep SelectedAchievementStep
+        {
+            get
+            {
+                return _selectedAchievementStep;
+            }
+            set
+            {
+                SetProperty(ref _selectedAchievementStep, value);
+            }
+        }
 
         private List<Achievement> _achievements;
         public List<Achievement> Achievements
@@ -62,13 +76,55 @@ namespace ChefRisingStar.ViewModels
                 SetProperty(ref _selectedAchievementType, value);
             }
         }
+        
+        private bool _isSearchExpanded;
+        public bool IsSearchExpanded
+        {
+            get
+            {
+                return _isSearchExpanded;
+            }
+            set
+            {
+                SetProperty(ref _isSearchExpanded, value);
+
+                IsInfoExpanded = !IsSearchExpanded;
+            }
+        }
+        
+        private bool _isInfoExpanded;
+        public bool IsInfoExpanded
+        {
+            get
+            {
+                return _isInfoExpanded;
+            }
+            set
+            {
+                SetProperty(ref _isInfoExpanded, value);
+            }
+        }
+        
+        private bool _isStepsPopupVisible;
+        public bool IsStepsPopupVisible
+        {
+            get
+            {
+                return _isStepsPopupVisible;
+            }
+            set
+            {
+                SetProperty(ref _isStepsPopupVisible, value);
+            }
+        }
 
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
+        public Command CloseStepsPopupCommand { get; }
         public Command<Achievement> ItemTapped { get; }
 
         public override IDataStore<Achievement, int> DataStore { get; protected set; }
-
+        
         public ManageAchievementsViewModel()
         {
             Title = "Manage Achievements";
@@ -77,10 +133,19 @@ namespace ChefRisingStar.ViewModels
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             ItemTapped = new Command<Achievement>(OnItemSelected);
+            CloseStepsPopupCommand = new Command(CloseStepsPopup);
 
             AddItemCommand = new Command(OnAddItem);
 
             DataStore = DependencyService.Get<IDataStore<Achievement, int>>();
+            
+            IsSearchExpanded = true;
+            IsInfoExpanded = false;
+        }
+
+        private void CloseStepsPopup(object obj)
+        {
+            IsStepsPopupVisible = false;
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -131,6 +196,9 @@ namespace ChefRisingStar.ViewModels
                 return;
 
             SelectedAchievementType = achievement.AchievementType;
+
+            IsSearchExpanded = false;
+            IsInfoExpanded = true;
 
             // This will push the ItemDetailPage onto the navigation stack
             //await Shell.Current.GoToAsync($"{nameof(AchievementDetailPage)}?{nameof(AchievementDetailViewModel.Id)}={achievement.Id}");

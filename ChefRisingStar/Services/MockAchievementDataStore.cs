@@ -30,7 +30,7 @@ namespace ChefRisingStar.Services
                 new Achievement(12, 300, "Use less fuel", "Try a recipe variation that uses less fuel to transport your food", "trophy64.png", AchievementTypes.Progress),
             };
 
-            IDataStore<AchievementStep, int> achievmentsConditionDs = DependencyService.Get<MockAchievementConditionDataStore>();
+            IDataStore<AchievementStep, int> achievmentsConditionDs = DependencyService.Get<MockAchievementStepDataStore>();
             ReadOnlyCollection<AchievementStep> achievmentConditions = achievmentsConditionDs.GetItems();
 
             items[1].AchievementSteps.Add(achievmentConditions[9]);

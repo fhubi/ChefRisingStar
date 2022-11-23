@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:ChefRisingStar.Views"
@@ -81,9 +81,10 @@
     <FlyoutItem Title="About" Icon="icon_about.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
-    <FlyoutItem IsVisible="{Binding CurrentUser.IsAdmin}" FlyoutDisplayOptions="AsMultipleItems">
-        <Tab Title="Achievement Admin" Icon="briefcase128.png">
-            <ShellContent Title="Manage Achievements" Route="ManageAchievementsPage" Icon="briefcase128.png" ContentTemplate="{DataTemplate local:ManageAchievementsPage}" />
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <Tab Title="Achievements" Icon="trophy64.png" IsVisible="{Binding CurrentUser.IsAdmin}">
+            <ShellContent Title="Achievements" Route="AboutPage" ContentTemplate="{DataTemplate local:AchievementsPage}" />
+            <ShellContent Title="Manage Achievements" Route="ManageAchievementsPage" Icon="briefcase128.png" ContentTemplate="{DataTemplate local:ManageAchievementsPage}" IsVisible="{Binding CurrentUser.IsAdmin}" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Adminstration" Icon="briefcase128.png" IsVisible="{Binding CurrentUser.IsAdmin}" FlyoutDisplayOptions="AsMultipleItems">
@@ -98,6 +99,9 @@
     </FlyoutItem>
     <FlyoutItem Title="Recipes" Icon="icon_feed.png">
         <ShellContent Route="RecipesListPage" ContentTemplate="{DataTemplate local:RecipesListPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Custom Recipes" Icon="icon_feed.png">
+        <ShellContent Route="CustomRecipePage" ContentTemplate="{DataTemplate local:CustomRecipePage}" />
     </FlyoutItem>
     <FlyoutItem Title="Food Footprint" Icon="footprint64.png">
         <ShellContent Route="FoodPrintsDetailPage" ContentTemplate="{DataTemplate local:FoodPrintsDetailPage}" />

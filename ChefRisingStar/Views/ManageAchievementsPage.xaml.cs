@@ -36,5 +36,10 @@ namespace ChefRisingStar.Views
             _viewModel.OnAppearing();
 
         }
+
+        private void AchievementStepSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            _viewModel.IsStepsPopupVisible = true;
+        }
     }
 }

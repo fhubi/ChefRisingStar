@@ -18,11 +18,15 @@
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Views\ManageAchievementsPage.xaml.cs">
       <DependentUpon>ManageAchievementsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ManageAchievementStepsPage.xaml.cs">
+      <DependentUpon>ManageAchievementStepsPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\ManageTeamsPage.xaml.cs">
       <DependentUpon>ManageTeamsPage.xaml</DependentUpon>
@@ -52,6 +56,7 @@
     <None Remove="Microsoft.AspNetCore.Hosting" />
     <None Remove="Microsoft.AspNetCore.Hosting.Abstractions" />
     <None Remove="CustomRenderer\" />
+    <None Remove="sqlite-net-pcl" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="sample\SubstituteIngredients.json" />
@@ -59,7 +64,11 @@
     <EmbeddedResource Include="sample\Substitutions.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="EventTriggers\" />
     <Folder Include="Styles\" />
     <Folder Include="CustomRenderer\" />
   </ItemGroup>
+  <!--<ItemGroup>
+    <EmbeddedResource Remove="Views\RecipeAddPage.xaml" />
+  </ItemGroup>-->
 </Project>

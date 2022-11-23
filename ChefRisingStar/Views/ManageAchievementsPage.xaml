@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChefRisingStar.Views.ManageAchievementsPage"
              xmlns:vm="clr-namespace:ChefRisingStar.ViewModels"
-             xmlns:con="clr-namespace:ChefRisingStar.Converters"
+             xmlns:model="clr-namespace:ChefRisingStar.Models"
+             xmlns:con="clr-namespace:ChefRisingStar.Converters" xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
              Title="{Binding Title}"
              Appearing="OnAppearing">
     
@@ -17,44 +18,136 @@
             <con:IntEnumConverter x:Key="IntEnum"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-
     <Grid Margin="5" RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        
+        <extensions:Expander Grid.Row="0" IsExpanded="{Binding IsSearchExpanded}" >
+            <extensions:Expander.Header>
+                <Grid>
+                    <Label Text="Search" FontAttributes="Bold" FontSize="Medium" />
+                    <Image Source="expandArrow64.png" HorizontalOptions="End" VerticalOptions="Start" HeightRequest="24">
+                        <Image.Triggers>
+                            <DataTrigger TargetType="Image" Binding="{Binding Source={RelativeSource AncestorType={x:Type extensions:Expander}}, Path=IsExpanded}" Value="True">
+                                <Setter Property="Source" Value="collapseArrow64.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+            </extensions:Expander.Header>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Text="Find" VerticalTextAlignment="Center" FontSize="Header" />
-        <SearchBar Grid.Row="0" Grid.Column="1" x:Name="searchBar" Placeholder="Search achievements..." SearchCommand="{Binding PerformSearch}"
-                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" TextChanged="OnTextChanged" Text="{Binding SearchText}" />
-        <Image Source="plus.png" Grid.Row="0" Grid.Column="2" HeightRequest="32" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
+                <SearchBar Grid.Row="0" Grid.Column="0" x:Name="searchBar" Placeholder="Search achievements..." SearchCommand="{Binding PerformSearch}"
+                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" TextChanged="OnTextChanged" Text="{Binding SearchText}" />
+                <Image Source="plus.png" Grid.Row="0" Grid.Column="1" HeightRequest="32" />
 
-        <ListView x:Name="searchResults" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Achievements}" SelectedItem="{Binding SelectedItem}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}" Detail="{Binding Description}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                <ListView x:Name="searchResults" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Achievements}" SelectedItem="{Binding SelectedItem}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Name}" Detail="{Binding Description}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </extensions:Expander>
+        <extensions:Expander Grid.Row="1" IsExpanded="{Binding IsInfoExpanded}" Margin="0,15,0,0" >
+            <extensions:Expander.Header>
+                <Grid>
+                    <Label Text="Info" FontAttributes="Bold" FontSize="Medium" />
+                    <Image Source="expandArrow64.png" HorizontalOptions="End" VerticalOptions="Start" HeightRequest="24">
+                        <Image.Triggers>
+                            <DataTrigger TargetType="Image" Binding="{Binding Source={RelativeSource AncestorType={x:Type extensions:Expander}}, Path=IsExpanded}" Value="True">
+                                <Setter Property="Source" Value="collapseArrow64.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+            </extensions:Expander.Header>
 
-        <Label Grid.Row="2" Grid.Column="0" Text="Name" VerticalTextAlignment="Center" FontSize="Header" />
-        <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Name}" FontSize="Small" />
-        <Label Grid.Row="3" Grid.Column="0" Text="Description" FontSize="Header" />
-        <Editor Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Description}" HeightRequest="80" FontSize="Small" VerticalOptions="Fill" Margin="0,-10,0,0"/>
-        <Label Grid.Row="4" Grid.Column="0" Text="Value" VerticalTextAlignment="Center" FontSize="Header" />
-        <Entry Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Value}" ClearButtonVisibility="WhileEditing" FontSize="Small" Keyboard="Numeric" />
-        <Label Grid.Row="5" Grid.Column="0" Text="Type" VerticalTextAlignment="Center" FontSize="Header" />
-        <Picker Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding AchieveTypes}" SelectedIndex="{Binding SelectedAchievementType, Converter={StaticResource IntEnum}}" Title="Select a type" FontSize="Small" />
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Text="Name" VerticalTextAlignment="Center" FontSize="Header" />
+                <Entry Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Name}" FontSize="Small" />
+                <Label Grid.Row="1" Grid.Column="0" Text="Description" FontSize="Header" />
+                <Editor Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Description}" HeightRequest="80" FontSize="Small" VerticalOptions="Fill" Margin="0,-10,0,0"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="Value" VerticalTextAlignment="Center" FontSize="Header" />
+                <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Value}" ClearButtonVisibility="WhileEditing" FontSize="Small" Keyboard="Numeric" />
+                <Label Grid.Row="3" Grid.Column="0" Text="Type" VerticalTextAlignment="Center" FontSize="Header" />
+                <Picker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding AchieveTypes}" SelectedIndex="{Binding SelectedAchievementType, Converter={StaticResource IntEnum}}" Title="Select a type" FontSize="Small" />
+                <Label Grid.Row="4" Grid.Column="0" Text="Steps:" VerticalTextAlignment="Center" FontSize="Medium" Margin="0,5,0,0" />
+                <ListView Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" x:Name="achievementDetails" ItemsSource="{Binding SelectedItem.AchievementSteps}" SelectedItem="{Binding SelectedAchievementStep}" ItemSelected="AchievementStepSelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" VerticalTextAlignment="Center" FontSize="Small" FontAttributes="Bold" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Description}" VerticalTextAlignment="Center" FontSize="Micro" />
+                                    <ImageButton Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Source="edit64.png" HeightRequest="24" Command="{Binding CloseStepsPopupCommand}" BackgroundColor="Transparent" HorizontalOptions="End" Margin="5,0,5,0" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </extensions:Expander>
+        <ContentView x:Name="popupAcheivementSteps" BackgroundColor="#C0808080" Padding="30, 0" IsVisible="{Binding IsStepsPopupVisible}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ImageButton Grid.Row="0" Grid.Column="2" Source="plus.png" HeightRequest="32" Command="{Binding CloseStepsPopupCommand}" BackgroundColor="Transparent" />
+                <Image Grid.Row="1" Grid.Column="2" Source="plus.png" HeightRequest="32" />
+                <Label Grid.Row="2" Grid.Column="0" Text="Name" VerticalTextAlignment="Center" FontSize="Header" />
+                <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedAchievementStep.Name}" FontSize="Small" />
+                <Label Grid.Row="3" Grid.Column="0" Text="Description" FontSize="Header" />
+                <Editor Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedAchievementStep.Description}" HeightRequest="80" FontSize="Small" VerticalOptions="Fill" Margin="0,-10,0,0"/>
+            </Grid>
+        </ContentView>
     </Grid>
-
+    
 </ContentPage>
