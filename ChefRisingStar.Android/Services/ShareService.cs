@@ -6,13 +6,16 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using System.Net.Http;
+using System.IO;
+using System.Net;
+using System.Linq;
 
 [assembly: Dependency(typeof(ShareService))]
 namespace ChefRisingStar.Droid.Services
 {
     internal class ShareService : Activity, IShare
     {
-        public Task Share(string text, string imagePath, bool fromWeb)
+        public async Task Share(string text, string imagePath, bool fromWeb)
         {
             var intent = new Intent(Intent.ActionSend);
             intent.AddFlags(ActivityFlags.GrantReadUriPermission);
@@ -22,17 +25,23 @@ namespace ChefRisingStar.Droid.Services
             intent.SetType("image/*");
             intent.SetFlags(ActivityFlags.GrantReadUriPermission);
 
-            var file = new Java.IO.File(imagePath);
-            var context = Android.App.Application.Context;
-            var packageName = Android.App.Application.Context.PackageName;
+            Java.IO.File file;
             if (fromWeb)
             {
-                intent.PutExtra(Intent.ExtraStream, Android.Net.Uri.Parse(imagePath));
+                string absPath = Path.Combine(FileSystem.CacheDirectory, imagePath.Split('/').Last());
+                var bytes = await GetBytes(imagePath);
+                await File.WriteAllBytesAsync(absPath, bytes);
+                file = new Java.IO.File(absPath);
             }
             else
             {
-                intent.PutExtra(Intent.ExtraStream, FileProvider.GetUriForFile(context, packageName + ".provider", file));
+                file = new Java.IO.File(imagePath);
             }
+            
+            var context = Android.App.Application.Context;
+            var packageName = Android.App.Application.Context.PackageName;
+
+            intent.PutExtra(Intent.ExtraStream, FileProvider.GetUriForFile(context, packageName + ".provider", file));
 
             intent.PutExtra(Intent.ExtraTitle, "Share Image");
 
@@ -43,8 +52,16 @@ namespace ChefRisingStar.Droid.Services
             chooserIntent.SetFlags(flags);
 
             Platform.AppContext.StartActivity(chooserIntent);
+        }
 
-            return Task.CompletedTask;
+        public async Task<byte[]> GetBytes(string url)
+        {
+            byte[] byteArray;
+            using (var webClient = new WebClient())
+            {
+                byteArray = await webClient.DownloadDataTaskAsync(url);
+            }
+            return byteArray;
         }
     }
 }

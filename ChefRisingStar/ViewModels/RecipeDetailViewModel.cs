@@ -457,13 +457,16 @@ namespace ChefRisingStar.ViewModels
                     filePath = galleryFileResult.FullPath;
                     break;
                 default:
-                    filePath = Recipe.Image.AbsolutePath;
+                    filePath = Recipe.Image.OriginalString;
                     fromWeb = true;
                     break;
 
             }
 
-            await DependencyService.Get<IShare>().Share(Recipe.Instructions?.Replace("<p>", "").Replace("</p>", ""), filePath, fromWeb);
+            await DependencyService.Get<IShare>().Share(Recipe.Instructions?
+                .Replace("<p>", "").Replace("</p>", "")
+                .Replace("<ol>", "").Replace("</ol>", "")
+                .Replace("<li>", "").Replace("</li>", " "),filePath, fromWeb);
         }
         #endregion
     }
