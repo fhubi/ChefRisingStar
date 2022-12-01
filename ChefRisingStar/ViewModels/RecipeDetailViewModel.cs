@@ -155,6 +155,7 @@ namespace ChefRisingStar.ViewModels
         public ICommand ToggleFavoriteCommand { get; }
         public ICommand ToggleBookmarkCommand { get; }
 
+        public ICommand ShareCommand { get; }
         #endregion 
 
         #region Constructors
