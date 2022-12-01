@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace ChefRisingStar.ViewModels
@@ -16,6 +17,7 @@ namespace ChefRisingStar.ViewModels
         private string _description;
         private string _selectedSubstitution;
         private string _restResponse;
+        private bool _isShareButtonVisible;
         private Achievement _achievement;
 
         public override IDataStore<Achievement, int> DataStore { get; protected set; }
@@ -64,11 +66,26 @@ namespace ChefRisingStar.ViewModels
             }
         }
 
+        public bool IsShareButtonVisible
+        {
+            get 
+            {
+                return _isShareButtonVisible;
+            }
+            set
+            {
+                SetProperty(ref _isShareButtonVisible, value);
+            }
+        }
+
+        public Command ShareCommand { get; }
+
         public AchievementDetailViewModel()
         {
             DataStore = DependencyService.Get<IDataStore<Achievement, int>>();
             AchievementSteps = new ObservableCollection<AchievementStep>();
 
+            ShareCommand = new Command(async () => await ShareAchievement());
             //MakeRestCall();
         }
 
@@ -114,6 +131,7 @@ namespace ChefRisingStar.ViewModels
                 Id = item.Id;
                 Title = item.Name;
                 Description = item.Description;
+                IsShareButtonVisible = _achievement.ImageOpacity == 1;
 
                 foreach (AchievementStep ac in item.AchievementSteps)
                     AchievementSteps.Add(ac);
@@ -122,6 +140,11 @@ namespace ChefRisingStar.ViewModels
             {
                 Debug.WriteLine($"Failed to Load Item: {itemId}");
             }
+        }
+
+        internal async Task ShareAchievement()
+        {
+            await DependencyService.Get<IShare>().Share(Title, _achievement.ImageSrc, "Achievement share", ShareType.Resource);
         }
     }
 }

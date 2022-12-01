@@ -15,9 +15,23 @@ namespace ChefRisingStar.iOS.Services
 {
     internal class ShareService : IShare
     {
-        public async Task Share(string text, string imagePath, bool fromWeb)
+        public async Task Share(string text, string imagePath, string title, ShareType shareType)
         {
-            ImageSource imageSource = fromWeb ? ImageSource.FromUri(new Uri(imagePath)) : ImageSource.FromFile(imagePath);
+            ImageSource imageSource = null;
+
+            switch (shareType)
+            {
+                case ShareType.Resource:
+                    imageSource = ImageSource.FromResource(imagePath);
+                    break;
+                case ShareType.Web:
+                    imageSource = ImageSource.FromUri(new Uri(imagePath));
+                    break;
+                case ShareType.Storage:
+                    imageSource = ImageSource.FromFile(imagePath);
+                    break;
+            }
+            
             var handler = new ImageLoaderSourceHandler();
             var uiImage = await handler.LoadImageAsync(imageSource);
 

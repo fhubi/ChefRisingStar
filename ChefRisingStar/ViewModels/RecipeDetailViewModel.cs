@@ -441,7 +441,7 @@ namespace ChefRisingStar.ViewModels
         internal async Task ShareRecipe()
         {
             string action = await Application.Current.MainPage.DisplayActionSheet("Photo options", "Cancel", null, "Take photo", "Select from gallery", "Use default image");
-            bool fromWeb = false;
+            ShareType shareType = ShareType.Storage;
             string filePath;
 
             switch (action)
@@ -458,7 +458,7 @@ namespace ChefRisingStar.ViewModels
                     break;
                 default:
                     filePath = Recipe.Image.OriginalString;
-                    fromWeb = true;
+                    shareType = ShareType.Web;
                     break;
 
             }
@@ -466,7 +466,7 @@ namespace ChefRisingStar.ViewModels
             await DependencyService.Get<IShare>().Share(Recipe.Instructions?
                 .Replace("<p>", "").Replace("</p>", "")
                 .Replace("<ol>", "").Replace("</ol>", "")
-                .Replace("<li>", "").Replace("</li>", " "),filePath, fromWeb);
+                .Replace("<li>", "").Replace("</li>", " "), filePath, "Recipe share", shareType);
         }
         #endregion
     }

@@ -7,6 +7,13 @@ namespace ChefRisingStar.Services
 {
     public interface IShare
     {
-        Task Share(string text, string imagePath, bool fromWeb);
+        Task Share(string text, string imagePath, string title, ShareType shareType);
+    }
+
+    public enum ShareType
+    {
+        Resource,
+        Web,
+        Storage
     }
 }
