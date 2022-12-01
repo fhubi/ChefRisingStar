@@ -1,21 +1,20 @@
-﻿using System;
+﻿using ChefRisingStar.Models;
+using System;
 using System.Linq;
-using System.Collections.Generic;
-using ChefRisingStar.Models;
 using Xamarin.Forms;
 
 namespace ChefRisingStar.Views
-{	
-	public partial class CustomRecipePage : ContentPage
-	{	
-		public CustomRecipePage ()
-		{
-			InitializeComponent ();
-		}
+{
+    public partial class CustomRecipePage : ContentPage
+    {
+        public CustomRecipePage()
+        {
+            InitializeComponent();
+        }
 
         protected override async void OnAppearing()
         {
-			base.OnAppearing();
+            base.OnAppearing();
 
             // Retrieve all the recipes from the database, and set them as the
             // data source for the CollectionView.

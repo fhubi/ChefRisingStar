@@ -6,10 +6,18 @@ Name TEXT UNIQUE NOT NULL,
 Url TEXT  NOT NULL
 );
 
+CREATE TABLE Languages (
+[Code] TEXT PRIMARY KEY,
+[Name] TEXT NOT NULL
+);
+
 CREATE TABLE Achievements (
 ID INTEGER PRIMARY KEY,
-Name TEXT NOT NULL,
-Description TEXT  NOT NULL
+[Name] TEXT NOT NULL,
+[LanguageCode] TEXT NOT NULL,
+[Value] INTEGER NOT NULL,
+Description TEXT  NOT NULL,
+FOREIGN KEY(LanguageCode) REFERENCES Languages(Code),
 );
 
 CREATE TABLE Metrics (
@@ -28,6 +36,7 @@ SchoolId INTEGER,
 TeamID INTEGER,
 JoinDate TEXT,
 LastLoginDate TEXT,
+PreferredLanguage TEXT,
 IsAdministrator INTEGER,
 IsLocked INTEGER,
 PasswordHash TEXT,
@@ -110,15 +119,19 @@ Id INTEGER PRIMARY KEY,
 Name TEXT NOT NULL
 );
 
-CREATE TABLE UserFavortites (
+CREATE TABLE UserFavorites (
 UserId INTEGER,
-RefId TEXT NOT NULL,
 FavoriteTypeID INTEGER NOT NULL,
+RefId TEXT NOT NULL,
 ActivityTime TEXT NOT NULL,
 FOREIGN KEY(UserID) REFERENCES Users(ID),
 FOREIGN KEY(FavoriteTypeID) REFERENCES FavoriteTypes(ID),
 PRIMARY KEY(UserID,RefId)
 );
+
+INSERT INTO Languages VALUES ("en", "English");
+INSERT INTO Languages VALUES ("fr", "Francais");
+
 
 INSERT INTO FavoriteTypes VALUES (1, "Recipe");
 INSERT INTO FavoriteTypes VALUES (2, "Ingredient");
@@ -141,7 +154,7 @@ INSERT INTO Metrics VALUES (12, "UserSubmittedRecipe", "User Submitted Recipe");
 INSERT INTO Metrics VALUES (13, "UserSentMessage", "User Sent Message");
 INSERT INTO Metrics VALUES (14, "AppError", "Application Error");
 
-INSERT INTO Users VALUES (1, "jonathan.brunette@gmail.com", "Jonathan", "Brunette", "Jonathan", null, null, null, null, 1, 0, null, null);
+INSERT INTO Users VALUES (1, "jonathan.brunette@gmail.com", "Jonathan", "Brunette", "Jonathan", null, null, null, null, "en", 1, 0, null, null);
 
 INSERT INTO SocialMediaSites VALUES (1, "Instagram", "Instagram.com");
 INSERT INTO SocialMediaSites VALUES (2, "Facebook", "Facebook.com");

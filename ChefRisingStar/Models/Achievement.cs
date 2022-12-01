@@ -7,11 +7,16 @@ namespace ChefRisingStar.Models
     [DebuggerDisplay("{GetDebuggerDisplay}")]
     public class Achievement : IEquatable<Achievement>
     {
-        public Achievement(int id, int value, string name, string description, string imageSrc, AchievementTypes achievementType)
+        public Achievement()
+        {
+
+        }
+        public Achievement(int id, int value, string name, string languageCode, string description, string imageSrc, AchievementTypes achievementType)
         {
             Id = id;
             Value = value;
             Name = name ?? throw new ArgumentNullException(nameof(name));
+            LanguageCode = languageCode ?? throw new ArgumentNullException(nameof(languageCode));
             Description = description ?? throw new ArgumentNullException(nameof(description));
             ImageSrc = imageSrc ?? throw new ArgumentNullException(nameof(imageSrc));
             AchievementType = achievementType;
@@ -19,7 +24,7 @@ namespace ChefRisingStar.Models
             AchievementSteps = new List<AchievementStep>();
         }
 
-        public Achievement(int id, int value, string name, string description, string imageSrc, AchievementTypes achievementType, DateTime dateEarned) : this(id, value, name, description, imageSrc, achievementType)
+        public Achievement(int id, int value, string name, string languageCode, string description, string imageSrc, AchievementTypes achievementType, DateTime dateEarned) : this(id, value, name, languageCode, description, imageSrc, achievementType)
         {
             DateEarned = dateEarned;
         }
@@ -27,6 +32,7 @@ namespace ChefRisingStar.Models
         public int Id { get; set; }
         public int Value { get; set; }
         public string Name { get; set; }
+        public string LanguageCode { get; set; }
         public string Description { get; set; }
         public string ImageSrc { get; set; }
 
@@ -60,6 +66,7 @@ namespace ChefRisingStar.Models
                    Id == other.Id &&
                    Value == other.Value &&
                    Name == other.Name &&
+                   LanguageCode == other.LanguageCode &&
                    Description == other.Description &&
                    ImageSrc == other.ImageSrc &&
                    DateEarned == other.DateEarned &&
@@ -73,6 +80,7 @@ namespace ChefRisingStar.Models
             hashCode = hashCode * -1521134295 + Id.GetHashCode();
             hashCode = hashCode * -1521134295 + Value.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LanguageCode);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Description);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ImageSrc);
             hashCode = hashCode * -1521134295 + DateEarned.GetHashCode();

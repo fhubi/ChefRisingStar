@@ -16,18 +16,18 @@ namespace ChefRisingStar.Services
         {
             items = new List<Achievement>()
             {
-                new Achievement(1, 10, "First Achievement", "You earn this Achievement just by downloading the App and starting to use it! Well done!", "trophy64.png", AchievementTypes.Progress, DateTime.Now.AddDays(-1)),
-                new Achievement(2, 20, "Register Achievement", "Register and add your preferences.", "trophy64.png", AchievementTypes.Progress),
-                new Achievement(3, 30, "Post a cooking selfie!", "Show off your cooking outfit and earn this badge", "trophy64.png", AchievementTypes.Social),
-                new Achievement(4, 40, "Start cooking!", "Cook a your first meal this week to get this achievement. Start your cooking adventure and make your first meal!", "trophy64.png", AchievementTypes.Skill),
-                new Achievement(5, 80, "Continue cooking", "Cook a two meals this week to get this achievement.", "trophy64.png", AchievementTypes.Skill),
-                new Achievement(6, 200, "Sustainable cooking", "Cook a cook a meal with a smaller eco footprint to get this achievement.", "trophy64.png", AchievementTypes.Progress),
-                new Achievement(7, 400, "Lower your foodprint", "Track your progress for one week by lowering your overall foodprint.", "trophy64.png", AchievementTypes.Progress),
-                new Achievement(8, 300, "Cook a Meatless Monday Meal", "Try a vegetarian alternative to a family favorite meal", "trophy64.png", AchievementTypes.Progress),
-                new Achievement(9, 300, "Cosume less water", "Try a recipe variation that uses less water for a meal", "trophy64.png", AchievementTypes.Progress),
-                new Achievement(10, 300, "Use less land", "Try a recipe variation that uses less land to grow your food", "trophy64.png", AchievementTypes.Progress),
-                new Achievement(11, 300, "Use less packaging", "Try a recipe variation that uses less packaging to wrap your food", "trophy64.png", AchievementTypes.Progress),
-                new Achievement(12, 300, "Use less fuel", "Try a recipe variation that uses less fuel to transport your food", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(1, 10, "First Achievement", "en", "You earn this Achievement just by downloading the App and starting to use it! Well done!", "trophy64.png", AchievementTypes.Progress, DateTime.Now.AddDays(-1)),
+                new Achievement(2, 20, "Register Achievement", "en", "Register and add your preferences.", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(3, 30, "Post a cooking selfie!", "en", "Show off your cooking outfit and earn this badge", "trophy64.png", AchievementTypes.Social),
+                new Achievement(4, 40, "Start cooking!", "en", "Cook a your first meal this week to get this achievement. Start your cooking adventure and make your first meal!", "trophy64.png", AchievementTypes.Skill),
+                new Achievement(5, 80, "Continue cooking", "en", "Cook a two meals this week to get this achievement.", "trophy64.png", AchievementTypes.Skill),
+                new Achievement(6, 200, "Sustainable cooking", "en", "Cook a cook a meal with a smaller eco footprint to get this achievement.", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(7, 400, "Lower your foodprint", "en", "Track your progress for one week by lowering your overall foodprint.", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(8, 300, "Cook a Meatless Monday Meal", "en", "Try a vegetarian alternative to a family favorite meal", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(9, 300, "Cosume less water", "en", "Try a recipe variation that uses less water for a meal", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(10, 300, "Use less land", "en", "Try a recipe variation that uses less land to grow your food", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(11, 300, "Use less packaging", "en", "Try a recipe variation that uses less packaging to wrap your food", "trophy64.png", AchievementTypes.Progress),
+                new Achievement(12, 300, "Use less fuel", "en", "Try a recipe variation that uses less fuel to transport your food", "trophy64.png", AchievementTypes.Progress),
             };
 
             IDataStore<AchievementStep, int> achievmentsConditionDs = DependencyService.Get<MockAchievementStepDataStore>();

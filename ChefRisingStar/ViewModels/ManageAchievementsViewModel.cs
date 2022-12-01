@@ -1,5 +1,4 @@
-﻿using ChefRisingStar.Extensions;
-using ChefRisingStar.Models;
+﻿using ChefRisingStar.Models;
 using ChefRisingStar.Services;
 using ChefRisingStar.Views;
 using System;
@@ -17,6 +16,7 @@ namespace ChefRisingStar.ViewModels
         private Achievement _selectedItem;
 
         private List<Achievement> _allAchievements;
+
         public List<Achievement> AllAchievements
         {
             get
@@ -28,18 +28,14 @@ namespace ChefRisingStar.ViewModels
                 SetProperty(ref _allAchievements, value);
             }
         }
-        
-        private AchievementStep _selectedAchievementStep;
 
-        public AchievementStep SelectedAchievementStep
+        public Achievement SelectedItem
         {
-            get
-            {
-                return _selectedAchievementStep;
-            }
+            get => _selectedItem;
             set
             {
-                SetProperty(ref _selectedAchievementStep, value);
+                SetProperty(ref _selectedItem, value);
+                OnItemSelected(value);
             }
         }
 
@@ -56,75 +52,26 @@ namespace ChefRisingStar.ViewModels
             }
         }
 
-        public List<string> AchieveTypes
+        private bool _isAddEnabled;
+        public bool IsAddEnabled
         {
             get
             {
-                return Enum.GetNames(typeof(AchievementTypes)).Select(b => b.SplitCamelCase()).ToList();
+                return _isAddEnabled;
+            }
+            set
+            {
+                SetProperty(ref _isAddEnabled, value);
             }
         }
 
-        private AchievementTypes _selectedAchievementType;
-        public AchievementTypes SelectedAchievementType
-        {
-            get
-            {
-                return _selectedAchievementType;
-            }
-            set
-            {
-                SetProperty(ref _selectedAchievementType, value);
-            }
-        }
-        
-        private bool _isSearchExpanded;
-        public bool IsSearchExpanded
-        {
-            get
-            {
-                return _isSearchExpanded;
-            }
-            set
-            {
-                SetProperty(ref _isSearchExpanded, value);
+        public ICommand LoadItemsCommand { get; }
+        public ICommand AddItemCommand { get; }
 
-                IsInfoExpanded = !IsSearchExpanded;
-            }
-        }
-        
-        private bool _isInfoExpanded;
-        public bool IsInfoExpanded
-        {
-            get
-            {
-                return _isInfoExpanded;
-            }
-            set
-            {
-                SetProperty(ref _isInfoExpanded, value);
-            }
-        }
-        
-        private bool _isStepsPopupVisible;
-        public bool IsStepsPopupVisible
-        {
-            get
-            {
-                return _isStepsPopupVisible;
-            }
-            set
-            {
-                SetProperty(ref _isStepsPopupVisible, value);
-            }
-        }
-
-        public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
-        public Command CloseStepsPopupCommand { get; }
         public Command<Achievement> ItemTapped { get; }
 
         public override IDataStore<Achievement, int> DataStore { get; protected set; }
-        
+
         public ManageAchievementsViewModel()
         {
             Title = "Manage Achievements";
@@ -133,19 +80,20 @@ namespace ChefRisingStar.ViewModels
 
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             ItemTapped = new Command<Achievement>(OnItemSelected);
-            CloseStepsPopupCommand = new Command(CloseStepsPopup);
 
             AddItemCommand = new Command(OnAddItem);
 
             DataStore = DependencyService.Get<IDataStore<Achievement, int>>();
-            
-            IsSearchExpanded = true;
-            IsInfoExpanded = false;
         }
 
-        private void CloseStepsPopup(object obj)
+        public async void ExecuteEditAchievementStep(AchievementStep step)
         {
-            IsStepsPopupVisible = false;
+            await Shell.Current.GoToAsync($"{nameof(ManageAchievementStepsPage)}?{nameof(ManageAchievementStepViewModel.Id)}={step.Id}&{nameof(ManageAchievementStepViewModel.ParentAchievementId)}={SelectedItem.Id}");
+        }
+
+        public async void ExecuteEditAchievement()
+        {
+            await Shell.Current.GoToAsync($"{nameof(ManageAchievementsPage02)}?{nameof(ManageAchievementViewModel.Id)}={SelectedItem.Id}");
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -171,37 +119,27 @@ namespace ChefRisingStar.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedItem = null;
-            ExecuteLoadItemsCommand();
-        }
 
-        public Achievement SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                SetProperty(ref _selectedItem, value);
-                OnItemSelected(value);
-            }
+            if (!AllAchievements.Any())
+                ExecuteLoadItemsCommand();
         }
 
         private async void OnAddItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+            Achievement item = new Achievement();
+            AllAchievements.Add(item);
+            SelectedItem = item;
+            //await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
         async void OnItemSelected(Achievement achievement)
         {
+            IsAddEnabled = true;
+
             if (achievement == null)
                 return;
 
-            SelectedAchievementType = achievement.AchievementType;
-
-            IsSearchExpanded = false;
-            IsInfoExpanded = true;
-
-            // This will push the ItemDetailPage onto the navigation stack
-            //await Shell.Current.GoToAsync($"{nameof(AchievementDetailPage)}?{nameof(AchievementDetailViewModel.Id)}={achievement.Id}");
+            IsAddEnabled = SelectedItem.Id != 0;
         }
 
         public void ShowAllAchievements()

@@ -3,25 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChefRisingStar.Views.ManageAchievementStepsPage"
              xmlns:vm="clr-namespace:ChefRisingStar.ViewModels"
+             xmlns:con="clr-namespace:ChefRisingStar.Converters"
              Title="{Binding Title}">
     
     <ContentPage.BindingContext>
-        <vm:TeamsViewModel />
+        <vm:ManageAchievementStepViewModel />
     </ContentPage.BindingContext>
     
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#96d1ff</Color>
+            <con:IntEnumConverter x:Key="IntEnum"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid Margin="5" RowSpacing="0">
+    <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -29,26 +30,12 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-
-        <Image Source="plus.png" Grid.Row="0" Grid.Column="2" HeightRequest="32" />
-
-        <ListView x:Name="searchResults" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Teams}" SelectedItem="{Binding SelectedItem}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <Label Grid.Row="2" Grid.Column="0" Text="Team Name" VerticalTextAlignment="Center" FontSize="Header" />
-        <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Name}" FontSize="Small" />
-        <Label Grid.Row="3" Grid.Column="0" Text="Captain" VerticalTextAlignment="Center" FontSize="Header" />
-        <Picker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Contacts}" SelectedItem="{Binding SelectedContact}" Title="Select a contact" FontSize="Small" />
-        <Label Grid.Row="4" Grid.Column="0" Text="Is Active" VerticalTextAlignment="Center" FontSize="Header" />
-        <StackLayout Grid.Row="4" Grid.Column="1" Orientation="Horizontal" RadioButtonGroup.GroupName="IsActive" RadioButtonGroup.SelectedValue="{Binding SelectedItem.IsActive}">
-            <RadioButton Value="true" Content="Yes" FontSize="Small" />
-            <RadioButton Value="false" Content="No" FontSize="Small" />
-        </StackLayout>
+                
+        <Label Grid.Row="0" Grid.Column="0" Text="Name" VerticalTextAlignment="Center" FontSize="Header" />
+        <Entry Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Name}" FontSize="Small" Placeholder="Step Name" />
+        <Label Grid.Row="1" Grid.Column="0" Text="Description" FontSize="Header" />
+        <Editor Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedItem.Description}" HeightRequest="80" FontSize="Small" VerticalOptions="Fill" Margin="0,-10,0,0" Placeholder="Step Description"/>
+        <Label Grid.Row="2" Grid.Column="0" Text="Type" VerticalTextAlignment="Center" FontSize="Header" />
+        <Picker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding LinkedTypes}" SelectedIndex="{Binding SelectedLinkType, Converter={StaticResource IntEnum}}" Title="Select a link type" FontSize="Small" />
     </Grid>
-
 </ContentPage>

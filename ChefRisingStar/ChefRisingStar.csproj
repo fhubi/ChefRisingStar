@@ -22,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ManageAchievementsPage02.xaml.cs">
+      <DependentUpon>ManageAchievementsPage02.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ManageAchievementsPage.xaml.cs">
       <DependentUpon>ManageAchievementsPage.xaml</DependentUpon>
     </Compile>

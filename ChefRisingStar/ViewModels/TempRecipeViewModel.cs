@@ -1,15 +1,14 @@
-﻿using System;
-using ChefRisingStar.Models;
-using System.Collections.ObjectModel;
-using Xamarin.Forms;
+﻿using ChefRisingStar.Models;
 using Newtonsoft.Json;
 using SQLite;
+using System.Collections.ObjectModel;
+using Xamarin.Forms;
 
 
 namespace ChefRisingStar.ViewModels
 {
-	public class TempRecipeViewModel : BaseViewModel
-	{
+    public class TempRecipeViewModel : BaseViewModel
+    {
         private string _selectedCuisines;
         private bool _isSelectCuisineVisible;
         public ObservableCollection<SelectableFilter> Cuisines { get; }
@@ -46,7 +45,7 @@ namespace ChefRisingStar.ViewModels
 
 
         public TempRecipeViewModel()
-		{
+        {
             SelectableFilter[] cuisines = { new SelectableFilter("African"), new SelectableFilter("American"), new SelectableFilter("British"), new SelectableFilter("Cajun"), new SelectableFilter("Caribbean"), new SelectableFilter("Chinese"), new SelectableFilter("Eastern European"), new SelectableFilter("European"), new SelectableFilter("French"), new SelectableFilter("German"), new SelectableFilter("Greek"), new SelectableFilter("Indian"), new SelectableFilter("Irish"), new SelectableFilter("Italian"), new SelectableFilter("Japanese"), new SelectableFilter("Jewish"), new SelectableFilter("Korean"), new SelectableFilter("Latin American"), new SelectableFilter("Mediterranean"), new SelectableFilter("Mexican"), new SelectableFilter("Middle Eastern"), new SelectableFilter("Nordic"), new SelectableFilter("Southern"), new SelectableFilter("Spanish"), new SelectableFilter("Thai"), new SelectableFilter("Vietnamese") };
             Cuisines = new ObservableCollection<SelectableFilter>(cuisines);
             _selectedCuisines = string.Empty;

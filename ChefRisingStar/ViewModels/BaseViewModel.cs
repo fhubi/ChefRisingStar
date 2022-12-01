@@ -24,6 +24,19 @@ namespace ChefRisingStar.ViewModels
             set { SetProperty(ref isBusy, value); }
         }
 
+        private bool _isDirty;
+        public bool IsDirty
+        {
+            get
+            {
+                return _isDirty;
+            }
+            set
+            {
+                SetProperty(ref _isDirty, value);
+            }
+        }
+
         string title = string.Empty;
         public string Title
         {
@@ -48,6 +61,7 @@ namespace ChefRisingStar.ViewModels
             backingStore = value;
             onChanged?.Invoke();
             OnPropertyChanged(propertyName);
+            IsDirty = true;
             return true;
         }
 

@@ -68,6 +68,11 @@ namespace ChefRisingStar.Views
             _viewModel.IsSubstitutionVisible = true;
         }
 
+        private void OnAppearing(object sender, EventArgs e)
+        {
+            _viewModel.OnAppearing();
+        }
+
         private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
             switch (e.StatusType)

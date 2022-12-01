@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using System.Windows.Input;
 using Xamarin.Forms;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -21,8 +23,12 @@ namespace ChefRisingStar.ViewModels
         private bool _isSubstitutionVisible;
         private bool _isViewMoreVisible;
         private bool _isContextMenuVisible;
+        private bool _isUserFavorite;
+        private bool _isUserBookmark;
         private Recipe _recipe;
         private string _selectedSubstitution;
+
+        private IDataStore<Favorite, IntStringKey> FavortiesDatastore;
 
         private ExtendedIngredient _selectedIngredient;
 
@@ -52,6 +58,26 @@ namespace ChefRisingStar.ViewModels
             set
             {
                 _nutritionInfo = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public bool IsUserFavorite
+        {
+            get => _isUserFavorite;
+            set
+            {
+                _isUserFavorite = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public bool IsUserBookmark
+        {
+            get => _isUserBookmark;
+            set
+            {
+                _isUserBookmark = value;
                 OnPropertyChanged();
             }
         }
@@ -124,9 +150,10 @@ namespace ChefRisingStar.ViewModels
 
         #region Commands
 
-        public Command LoadUrlCommand { get; }
-        public Command OpenSubstitutionsCommand { get; }
-        public Command ShareCommand { get; }
+        public ICommand LoadUrlCommand { get; }
+        public ICommand OpenSubstitutionsCommand { get; }
+        public ICommand ToggleFavoriteCommand { get; }
+        public ICommand ToggleBookmarkCommand { get; }
 
         #endregion 
 
@@ -137,11 +164,24 @@ namespace ChefRisingStar.ViewModels
             Title = recipe.Title;
             Recipe = recipe;
 
+            //TODO: REMOVE When actual user is set
+            CurrentUser = new User
+            {
+                Id = 1,
+                Username = "Fallout",
+                EmailAddress = "fallout99@hotmail.com",
+                IsAdmin = true
+            };
+
             Instructions = new ObservableCollection<Step>();
             Substitutions = new ObservableCollection<string>();
             NewIngredients = new ObservableCollection<ExtendedIngredient>();
             BasicNutritionalInfo = new ObservableCollection<NutritionInfoDetail>();
             DetailNutritionalInfo = new ObservableCollection<NutritionInfoDetail>();
+
+            ToggleFavoriteCommand = new Command(ExecuteToggleFavorite);
+            ToggleBookmarkCommand = new Command(ExecuteToggleBookmark);
+            FavortiesDatastore = DependencyService.Get<IDataStore<Favorite, IntStringKey>>();
 
             foreach (AnalyzedInstruction ins in Recipe.AnalyzedInstructions)
             {
@@ -173,7 +213,48 @@ namespace ChefRisingStar.ViewModels
             ShareCommand = new Command(async () => await ShareRecipe());
         }
 
-        #endregion 
+        private async void ExecuteToggleFavorite()
+        {
+            ExecuteToggle(FavoriteTypes.Recipe).ContinueWith(t => IsUserFavorite = t.Result);
+        }
+        
+        private async void ExecuteToggleBookmark()
+        {
+            ExecuteToggle(FavoriteTypes.Bookmark).ContinueWith(t=> IsUserBookmark = t.Result);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="favoriteType"></param>
+        /// <returns>If is now FavoriteType</returns>
+        private async Task<bool> ExecuteToggle(FavoriteTypes favoriteType)
+        {
+            try
+            {
+                List<Favorite> favorites = (await FavortiesDatastore.GetItemsAsync(true)).ToList();
+
+                var foundFave = favorites.FirstOrDefault(f => f.UserId == CurrentUser.Id && f.ReferenceId == Recipe.Id.ToString() && f.FavoriteType == favoriteType);
+
+                if (foundFave != null)
+                {
+                    FavortiesDatastore.DeleteItemAsync(new IntStringKey(foundFave.UserId, foundFave.ReferenceId));
+                    return false;
+                }
+                else
+                {
+                    FavortiesDatastore.AddItemAsync(new Favorite(CurrentUser.Id, favoriteType, Recipe.Id.ToString()));
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return false;
+        }
+
+        #endregion
 
         #region Methods
 
@@ -400,6 +481,37 @@ namespace ChefRisingStar.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error replacing ingredient '{SelectedIngredient.Name}' with {SelectedSubstitution}: {ex}");
+            }
+        }
+
+        public async void OnAppearing()
+        {
+            IsBusy = true;
+
+            try
+            {
+                List<Favorite> favorites = (await FavortiesDatastore.GetItemsAsync(true)).ToList();
+                var foundFave = favorites.Any(f => f.UserId == CurrentUser.Id && f.ReferenceId == Recipe.Id.ToString() && f.FavoriteType == FavoriteTypes.Recipe);
+
+                if(foundFave)
+                {
+                    IsUserFavorite = true;
+                }
+                
+                var foundBookmark = favorites.Any(f => f.UserId == CurrentUser.Id && f.ReferenceId == Recipe.Id.ToString() && f.FavoriteType == FavoriteTypes.Bookmark);
+
+                if(foundBookmark)
+                {
+                    IsUserBookmark = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"Error OnAppearing: {ex}");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
 

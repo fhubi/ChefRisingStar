@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace ChefRisingStar.ViewModels
@@ -14,8 +15,8 @@ namespace ChefRisingStar.ViewModels
         private Achievement _selectedItem;
 
         public ObservableCollection<Achievement> Achievements { get; }
-        public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
+        public ICommand LoadItemsCommand { get; }
+        public ICommand AddItemCommand { get; }
         public Command<Achievement> ItemTapped { get; }
 
         public override IDataStore<Achievement, int> DataStore { get; protected set; }

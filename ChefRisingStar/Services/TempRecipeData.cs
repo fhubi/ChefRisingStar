@@ -1,18 +1,16 @@
-﻿using System;
+﻿using ChefRisingStar.Models;
 using SQLite;
-using Xamarin.Forms;
-using ChefRisingStar.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ChefRisingStar.Services
 {
-	public class TempRecipeDatabase
-	{
+    public class TempRecipeDatabase
+    {
         readonly SQLiteAsyncConnection database;
 
-		public TempRecipeDatabase (string dbPath)
-		{
+        public TempRecipeDatabase(string dbPath)
+        {
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<TempRecipeDetails>().Wait();
         }

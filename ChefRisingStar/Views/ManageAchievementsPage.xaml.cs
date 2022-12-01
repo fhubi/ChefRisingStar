@@ -34,12 +34,11 @@ namespace ChefRisingStar.Views
         private void OnAppearing(object sender, EventArgs e)
         {
             _viewModel.OnAppearing();
-
         }
 
-        private void AchievementStepSelected(object sender, SelectedItemChangedEventArgs e)
+        private void searchResults_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            _viewModel.IsStepsPopupVisible = true;
+            _viewModel.ExecuteEditAchievement();
         }
     }
 }

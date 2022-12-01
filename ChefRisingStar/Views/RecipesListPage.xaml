@@ -59,7 +59,7 @@
                                     <controls:CircleImage Source="{Binding Image}" Aspect="AspectFill" BorderColor="Black" BorderThickness="3" WidthRequest="60" HeightRequest="60" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     <StackLayout Grid.Column="1" VerticalOptions="Center">
                                         <Label Text="{Binding Title}"/>
-                                        <WebView HeightRequest="50" InputTransparent="True" Visual="Material">
+                                        <WebView HeightRequest="50" InputTransparent="True" Visual="Material" BackgroundColor="Transparent">
                                             <WebView.Source>
                                                 <HtmlWebViewSource Html="{Binding Summary}" />
                                             </WebView.Source>

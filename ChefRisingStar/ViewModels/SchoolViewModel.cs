@@ -107,8 +107,8 @@ namespace ChefRisingStar.ViewModels
                 SelectedItem.ContactId = value.Id;
         }
 
-        public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
+        public ICommand LoadItemsCommand { get; }
+        public ICommand AddItemCommand { get; }
         public Command<School> ItemTapped { get; }
 
         public override IDataStore<School, int> DataStore { get; protected set; }
@@ -155,7 +155,6 @@ namespace ChefRisingStar.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedItem = null;
         }
 
         private async void OnAddItem(object obj)

@@ -18,9 +18,12 @@ namespace ChefRisingStar
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(ManageSchoolsPage), typeof(ManageSchoolsPage));
             Routing.RegisterRoute(nameof(ManageUsersPage), typeof(ManageUsersPage));
+            Routing.RegisterRoute(nameof(ManageAchievementStepsPage), typeof(ManageAchievementStepsPage));
+            Routing.RegisterRoute(nameof(ManageAchievementsPage02), typeof(ManageAchievementsPage02));
             Routing.RegisterRoute(nameof(RecipeEntryPage), typeof(RecipeEntryPage));
 
-            BindingContext = _viewModel = new AppShellViewModel();        }
+            BindingContext = _viewModel = new AppShellViewModel();
+        }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {

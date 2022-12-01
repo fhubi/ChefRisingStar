@@ -10,7 +10,6 @@ namespace ChefRisingStar.Views
         public AchievementsPage()
         {
             InitializeComponent();
-
             BindingContext = _viewModel = new AchievementsViewModel();
         }
 

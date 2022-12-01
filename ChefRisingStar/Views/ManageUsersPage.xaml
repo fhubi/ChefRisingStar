@@ -65,10 +65,7 @@
             <RadioButton Value="false" Content="No" />
         </StackLayout>
         <Label Grid.Row="8" Grid.Column="0" Text="Is Locked" VerticalTextAlignment="Center" FontSize="Header" />
-        <StackLayout Grid.Row="8" Grid.Column="1" Orientation="Horizontal" RadioButtonGroup.GroupName="IsLocked" RadioButtonGroup.SelectedValue="{Binding SelectedItem.IsLocked}">
-            <RadioButton Value="true" Content="Yes" />
-            <RadioButton Value="false" Content="No" />
-        </StackLayout>
+        <Switch Grid.Row="8" Grid.Column="1" IsToggled="{Binding SelectedItem.IsLocked}" HorizontalOptions="Start"/>
 
         <ImageButton Grid.Row="8" Grid.Column="2" Source="plus.png" HeightRequest="32" Command="{Binding ShowAllUsers}" BackgroundColor="Transparent"/>
 

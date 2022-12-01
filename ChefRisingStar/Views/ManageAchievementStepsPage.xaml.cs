@@ -1,17 +1,17 @@
 ﻿using ChefRisingStar.ViewModels;
-using System;
 using Xamarin.Forms;
 
 namespace ChefRisingStar.Views
 {
+
     public partial class ManageAchievementStepsPage : ContentPage
     {
-        TeamsViewModel _viewModel;
+        ManageAchievementStepViewModel _viewModel;
 
         public ManageAchievementStepsPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new TeamsViewModel();
+            BindingContext = _viewModel = new ManageAchievementStepViewModel();
             Title = _viewModel.Title;
         }
     }

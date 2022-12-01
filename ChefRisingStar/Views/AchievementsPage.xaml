@@ -45,7 +45,7 @@
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:AchievementsViewModel}}, Path=ItemTapped}"		
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:AchievementsViewModel}}, Path=ItemTapped}"
                                 CommandParameter="{Binding .}">
                             </TapGestureRecognizer>
                         </Grid.GestureRecognizers>

@@ -13,7 +13,10 @@ namespace ChefRisingStar.Models
 
         public const string CompleteImage = "checkmark64.png";
         public const string IncompleteImage = "emptycheckbox64.png";
+        public AchievementStep()
+        {
 
+        }
         public AchievementStep(int id, string name, string description)
         {
             if (string.IsNullOrEmpty(name))
@@ -105,5 +108,13 @@ namespace ChefRisingStar.Models
         {
             return $"{Id} - {Name}";
         }
+    }
+
+    public enum AchievementStepLinkedTypes
+    {
+        Recipe,
+        VisitLink,
+        WatchVideo,
+        CompleteAction
     }
 }

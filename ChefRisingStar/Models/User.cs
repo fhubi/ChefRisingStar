@@ -18,6 +18,8 @@ namespace ChefRisingStar.Models
         public DateTime JoinDate { get; set; }
         public DateTime LastLoginDate { get; set; }
 
+        public string PreferredLanguage { get; set; }
+
         public bool IsAdmin { get; set; }
         public bool IsLocked { get; set; }
 

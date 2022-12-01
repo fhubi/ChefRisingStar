@@ -7,6 +7,20 @@ namespace ChefRisingStar.Models
 {
     public abstract class BaseNotifyModel : INotifyPropertyChanged
     {
+        private bool _isDirty;
+
+        protected bool IsDirty
+        {
+            get
+            {
+                return _isDirty;
+            }
+            set
+            {
+                SetProperty(ref _isDirty, value);
+            }
+        }
+
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
             Action onChanged = null)
@@ -17,6 +31,7 @@ namespace ChefRisingStar.Models
             backingStore = value;
             onChanged?.Invoke();
             OnPropertyChanged(propertyName);
+            IsDirty = true;
             return true;
         }
 

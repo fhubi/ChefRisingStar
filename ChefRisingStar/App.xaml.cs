@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ChefRisingStar.Services;
+using System;
 using System.IO;
-using ChefRisingStar.Services;
 using Xamarin.Forms;
 
 namespace ChefRisingStar
@@ -31,6 +31,8 @@ namespace ChefRisingStar
             DependencyService.Register<MockUserDataStore>();
             DependencyService.Register<MockSchooDataStore>();
             DependencyService.Register<MockTeamDataStore>();
+            DependencyService.Register<MockLanguageDataStore>();
+            DependencyService.Register<MockFavoritesDataStore>();
 
             DependencyService.Register<SubstitutionCache>();
             DependencyService.Register<IngredientCache>();

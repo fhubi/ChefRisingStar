@@ -1,12 +1,11 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SQLite;
 
 namespace ChefRisingStar.Models
 {
-    
+
     public class TempRecipeDetails
-	{
+    {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
 

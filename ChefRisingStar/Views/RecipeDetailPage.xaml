@@ -8,7 +8,8 @@
              ios:Page.UseSafeArea="True"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="ChefRisingStar.Views.RecipeDetailPage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             Appearing="OnAppearing">
     
     <ContentPage.Resources>
     <ResourceDictionary>
@@ -214,13 +215,25 @@
                                 <pancake:PancakeView.Shadow>
                                     <pancake:DropShadow Color="Black" BlurRadius="10" Offset="1,1"/>
                                 </pancake:PancakeView.Shadow>
-                                <Image Source="https://www.iconpacks.net/icons/1/free-heart-icon-492-thumb.png" Aspect="AspectFit" Margin="5"/>
+                                <ImageButton Source="heart64.png" Command="{Binding ToggleFavoriteCommand}" Aspect="AspectFit" Margin="5" BackgroundColor="Transparent">
+                                    <ImageButton.Triggers>
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsUserFavorite}" Value="True">
+                                            <Setter Property="Source" Value="heartfull64.png" />
+                                        </DataTrigger>
+                                    </ImageButton.Triggers>
+                                </ImageButton>
                             </pancake:PancakeView>
                             <pancake:PancakeView CornerRadius="50" Margin="15,-20,70,0" HeightRequest="35" WidthRequest="35" Padding="2" HorizontalOptions="EndAndExpand" VerticalOptions="Start" BackgroundColor="White" >
                                 <pancake:PancakeView.Shadow>
                                     <pancake:DropShadow Color="Black" BlurRadius="10" Offset="1,1"/>
                                 </pancake:PancakeView.Shadow>
-                                <Image Source="https://cdn.iconscout.com/icon/premium/png-256-thumb/save-2037779-1723249.png" Aspect="AspectFit" Margin="5"/>
+                                <ImageButton Source="bookmarkwhite64.png" Command="{Binding ToggleBookmarkCommand}" Aspect="AspectFit" Margin="5" BackgroundColor="Transparent">
+                                    <ImageButton.Triggers>
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsUserBookmark}" Value="True">
+                                            <Setter Property="Source" Value="bookmarkblack64.png" />
+                                        </DataTrigger>
+                                    </ImageButton.Triggers>
+                                </ImageButton>
                             </pancake:PancakeView>
                         </Grid>
                         <pancake:PancakeView Grid.Row="2" BackgroundColor="CornflowerBlue" HeightRequest="50" Padding="0" CornerRadius="20,20,0,0" VerticalOptions="EndAndExpand">
